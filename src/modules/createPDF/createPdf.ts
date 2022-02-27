@@ -1,9 +1,18 @@
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer'
 
-(async () => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.setContent(`<!DOCTYPE html>
+interface PdfOptions {
+    name: string;
+}
+
+export default class createFile implements PdfOptions {
+    constructor(public name: string) {
+    }
+
+    //function
+    createPdf = async () => {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.setContent(`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -96,21 +105,27 @@ const puppeteer = require('puppeteer');
 `);
 
 
-    const dimensions = await page.evaluate(() => {
+        const dimensions = await page.evaluate(() => {
+            return {
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight,
+                deviceScaleFactor: window.devicePixelRatio,
+            };
+        });
+
+        await page.setViewport({
+            width: dimensions.width,
+            height: dimensions.height,
+            deviceScaleFactor: 1,
+        });
+
+
+        await page.pdf({path: 'src/files/ticket2.pdf', format: 'a6'});
+        await browser.close();
+
         return {
-            width: document.documentElement.clientWidth,
-            height: document.documentElement.clientHeight,
-            deviceScaleFactor: window.devicePixelRatio,
-        };
-    });
+            status: 'complete'
+        }
 
-    await page.setViewport({
-        width: dimensions.width,
-        height: dimensions.height,
-        deviceScaleFactor: 1,
-    });
-
-
-    await page.pdf({path: 'src/files/ticket2.pdf', format: 'a6'});
-    await browser.close();
-})();
+    }
+}
