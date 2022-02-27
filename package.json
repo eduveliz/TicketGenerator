@@ -1,0 +1,23 @@
+{
+  "name": "ticketgenerator",
+  "version": "1.0.0",
+  "description": "The goal is to create tickets based on simple attached information.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduveliz/TicketGenerator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eduveliz/TicketGenerator/issues"
+  },
+  "homepage": "https://github.com/eduveliz/TicketGenerator#readme",
+  "dependencies": {
+    "puppeteer": "^13.4.0"
+  }
+}
