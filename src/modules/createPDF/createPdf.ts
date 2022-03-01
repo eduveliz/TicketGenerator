@@ -1,11 +1,18 @@
 import puppeteer from 'puppeteer'
-
-interface PdfOptions {
-    name: string;
-}
+import {PdfOptions} from "../../Interfaces/ticket";
 
 export default class createFile implements PdfOptions {
-    constructor(public name: string) {
+    constructor(
+        public name: string,
+        public fontFamily: string,
+        public storeInformation: {
+            storeName: string;
+            firstAddress: string;
+            secondAddress: string;
+            logo: string;
+        },
+        public data: any
+    ) {
     }
 
     //function
@@ -16,7 +23,7 @@ export default class createFile implements PdfOptions {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ticket</title>
+    <title>${this.name}</title>
 
     <style>
         .center-content {
@@ -31,24 +38,23 @@ export default class createFile implements PdfOptions {
 
 
 <div class="center-content">
-    <h1>Receipt</h1>
+    <h1>${this.storeInformation.storeName}</h1>
 </div>
-
 
 <div class="center-content">
     <h3>Thanks for your visit</h3>
 </div>
 
 <div class="center-content">
-    <img height="50" width="50" src="https://s2.coinmarketcap.com/static/img/coins/200x200/74.png" alt="">
+    <img height="50" width="50" src="${this.storeInformation.logo}" alt="">
 </div>
 
 <div class="center-content">
-    <h3 style="margin-bottom: 0">1 Rocket Rd, Hawthorne</h3>
+    <h3 style="margin-bottom: 0">${this.storeInformation.firstAddress}</h3>
 </div>
 
 <div class="center-content" >
-    <h3 style="margin: 0"> CA 90250, USA</h3>
+    <h3 style="margin: 0">${this.storeInformation.secondAddress}</h3>
 </div>
 
 <div style="margin-top: 10px;width: 100%">
@@ -120,7 +126,7 @@ export default class createFile implements PdfOptions {
         });
 
 
-        await page.pdf({path: 'src/files/ticket2.pdf', format: 'a6'});
+        await page.pdf({path: `src/files/${this.name}.pdf`, format: 'a6'});
         await browser.close();
 
         return {

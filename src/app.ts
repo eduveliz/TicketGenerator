@@ -1,13 +1,34 @@
 import createFile from "./modules/createPDF/createPdf";
 import express from "express"
+import {PdfOptions} from "./Interfaces/ticket";
 
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-    const create = new createFile('test')
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+app.post('/ticket', (req, res) => {
+
+    console.log(req)
+
+    const mockRequest: PdfOptions = {
+        name: req.body.name,
+        fontFamily: req.body.fontFamily,
+        storeInformation: {
+            storeName: req.body.storeInformation.storeName,
+            firstAddress: req.body.storeInformation.firstAddress,
+            secondAddress: req.body.storeInformation.secondAddress,
+            logo: req.body.logo,
+        },
+        data: req.body.data,
+    }
+
+    const create = new createFile(mockRequest.name, mockRequest.fontFamily, mockRequest.storeInformation, mockRequest.data)
     create.createPdf().then((r) => {
-        console.log('Status: ' + r.status)
+        res.send({
+            status: r.status
+        });
     });
 })
 
