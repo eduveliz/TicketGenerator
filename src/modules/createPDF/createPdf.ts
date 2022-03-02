@@ -1,18 +1,13 @@
 import puppeteer from 'puppeteer'
-import {PdfOptions} from "../../Interfaces/ticket";
+import {ProductModelInterface, StoreInformationInterface, TicketInterface} from "../../Interfaces/ticket";
 import PugConverter from "../PugConverter/pugConverter";
 
-export default class createFile implements PdfOptions {
+export default class createFile implements TicketInterface {
     constructor(
         public name: string,
         public fontFamily: string,
-        public storeInformation: {
-            storeName: string;
-            firstAddress: string;
-            secondAddress: string;
-            logo: string;
-        },
-        public data: any
+        public storeInformation: StoreInformationInterface,
+        public data: ProductModelInterface
     ) {
     }
 

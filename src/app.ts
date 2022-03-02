@@ -1,6 +1,6 @@
 import createFile from "./modules/createPDF/createPdf";
 import express from "express"
-import {PdfOptions} from "./Interfaces/ticket";
+import {TicketInterface} from "./Interfaces/ticket";
 
 const app = express()
 const port = 3000
@@ -10,9 +10,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.post('/ticket', (req, res) => {
 
-    console.log(req)
-
-    const mockRequest: PdfOptions = {
+    const ticket: TicketInterface = {
         name: req.body.name,
         fontFamily: req.body.fontFamily,
         storeInformation: {
@@ -24,12 +22,13 @@ app.post('/ticket', (req, res) => {
         data: req.body.data,
     }
 
-    const create = new createFile(mockRequest.name, mockRequest.fontFamily, mockRequest.storeInformation, mockRequest.data)
+    const create = new createFile(ticket.name, ticket.fontFamily, ticket.storeInformation, ticket.data)
     try {
         create.createPdf().then((r) => {
             res.send({
                 status: r.status
             });
+            console.log(r)
         });
     } catch (e) {
         console.log(e)
