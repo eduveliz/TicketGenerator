@@ -25,11 +25,15 @@ app.post('/ticket', (req, res) => {
     }
 
     const create = new createFile(mockRequest.name, mockRequest.fontFamily, mockRequest.storeInformation, mockRequest.data)
-    create.createPdf().then((r) => {
-        res.send({
-            status: r.status
+    try {
+        create.createPdf().then((r) => {
+            res.send({
+                status: r.status
+            });
         });
-    });
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 app.listen(port, () => {

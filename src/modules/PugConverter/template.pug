@@ -1,0 +1,37 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    title Ticket
+    style.
+        .center-content {
+            width: 100%;
+            display: grid;
+            place-content: center
+        }
+.center-content
+    h1 #{storeInformation.storeName}
+.center-content
+    h3 Thanks for your visit
+.center-content
+    img(height='50' width='50' src='https://s2.coinmarketcap.com/static/img/coins/200x200/74.png' alt='')
+.center-content
+    h3(style='margin-bottom: 0') #{storeInformation.firstAddress}
+.center-content
+    h3(style='margin: 0')  #{storeInformation.secondAddress}
+div(style='margin-top: 10px')
+    div(style='display: flex;justify-content: space-around;width: 100%;')
+        div(style='width: 25%') Product
+        div(style='width: 25%;text-align: center') Unit Price
+        div(style='width: 25%;text-align: center') Qty
+        div(style='width: 25%;text-align: center') Total
+    div(style='margin-top: 10px')
+        each val in data
+            div(style='display: flex;justify-content: space-around;width: 100%;')
+                div(style='width: 25%') #{val.productName}
+                div(style='width: 25%;text-align: center') $ #{val.price}
+                div(style='width: 25%;text-align: center')  #{val.quantity}
+                div(style='width: 25%;text-align: center') $ #{val.total}
+
+    .center-content(style='margin: 0')
+        h3 Thanks for your visit
+
