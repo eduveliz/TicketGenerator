@@ -25,12 +25,18 @@ app.post('/ticket', (req, res) => {
     const create = new createFile(ticket.name, ticket.fontFamily, ticket.storeInformation, ticket.data)
     try {
         create.createPdf().then((r) => {
+            res.download( `src/files/${ticket.name}.pdf`);
+
             res.send({
                 status: r.status
             });
             console.log(r)
         });
     } catch (e) {
+        res.send({
+            status: 'Error',
+            errorMessage: e
+        })
         console.log(e)
     }
 })
